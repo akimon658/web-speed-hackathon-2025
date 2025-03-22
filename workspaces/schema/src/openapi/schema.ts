@@ -6,7 +6,7 @@ import { z } from 'zod';
 
 import * as databaseSchema from '@wsh-2025/schema/src/database/schema';
 
-function assertSchema<T>(_actual: z.ZodType<NoInfer<T>>, _expected: z.ZodType<T>): void {}
+function assertSchema<T>(_actual: z.ZodType<NoInfer<T>>, _expected: z.ZodType<T>): void { }
 
 const channel = z.object({
   id: z.string().openapi({ format: 'uuid' }),
@@ -184,14 +184,12 @@ export const getRecommendedModulesResponse = z.array(
       recommendedItem.extend({
         series: series
           .extend({
-            episodes: z.array(episode.extend({})),
+            episodes: z.array(z.object({ title: z.string() }))
           })
           .nullable(),
         episode: episode
           .extend({
-            series: series.extend({
-              episodes: z.array(episode.extend({})),
-            }),
+            series: z.object({ title: z.string() })
           })
           .nullable(),
       }),
