@@ -13,7 +13,7 @@ async function main() {
   await initializeDatabase();
 
   const app = fastify({
-    https: process.env['NODE_ENV'] === 'production' ? {
+    https: process.env['HTTPS'] === 'true' ? {
       key: fs.readFileSync('/etc/ssl/private.key'),
       cert: fs.readFileSync('/etc/ssl/origin_certificate.pem'),
     } : undefined,
