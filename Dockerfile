@@ -5,6 +5,10 @@ RUN corepack use pnpm
 WORKDIR /app
 COPY . /app
 RUN pnpm install
+ENV NODE_ENV=development
+RUN cd workspaces/client && pnpm build
+ENV NODE_ENV=production
 ENV HTTPS=true
 ENV PORT=443
+WORKDIR /app/workspaces/server
 CMD ["pnpm", "start"]
