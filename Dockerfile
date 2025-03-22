@@ -10,5 +10,4 @@ RUN cd workspaces/client && pnpm build
 ENV NODE_ENV=production
 ENV HTTPS=true
 ENV PORT=443
-WORKDIR /app/workspaces/server
 CMD ["pnpm", "start"]
