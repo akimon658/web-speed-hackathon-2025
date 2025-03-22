@@ -14,7 +14,7 @@ import { readdirSync } from 'node:fs';
 function getFiles(parent: string): string[] {
   const dirents = readdirSync(parent, { withFileTypes: true });
   return dirents
-    .filter((dirent) => dirent.isFile() && !dirent.name.startsWith('.'))
+    .filter((dirent) => dirent.isFile() && !dirent.name.startsWith('.') && dirent.name.endsWith('.avif'))
     .map((dirent) => path.join(parent, dirent.name));
 }
 
@@ -89,7 +89,7 @@ async function main() {
   });
 
   const rootDir = path.resolve(__dirname, '../../..');
-  const files = await getFiles(path.resolve(rootDir, 'public/images'));
+  const files = getFiles(path.resolve(rootDir, 'public/images'));
   const imagePaths = files.map((file) => path.join('/', path.relative(rootDir, file)));
 
   try {
