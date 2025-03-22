@@ -1,4 +1,5 @@
 import '@wsh-2025/server/src/setups/luxon';
+import fs from 'fs';
 
 import cors from '@fastify/cors';
 import fastify from 'fastify';
@@ -11,7 +12,12 @@ import { registerStreams } from '@wsh-2025/server/src/streams';
 async function main() {
   await initializeDatabase();
 
-  const app = fastify();
+  const app = fastify({
+    https: process.env['NODE_ENV'] === 'production' ? {
+      key: fs.readFileSync('/etc/ssl/private.key'),
+      cert: fs.readFileSync('/etc/ssl/origin_certificate.pem'),
+    } : undefined,
+  });
 
   app.addHook('onSend', async (_req, reply) => {
     reply.header('cache-control', 'no-store');
