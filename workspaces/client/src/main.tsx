@@ -1,6 +1,6 @@
 import '@wsh-2025/client/src/setups/polyfills';
 import '@wsh-2025/client/src/setups/luxon';
-import '@wsh-2025/client/src/setups/unocss';
+import { init } from '@wsh-2025/client/src/setups/unocss';
 
 import { StrictMode } from 'react';
 import { hydrateRoot } from 'react-dom/client';
@@ -19,6 +19,9 @@ function main() {
   const store = createStore({});
   const router = createBrowserRouter(createRoutes(store), {});
 
+  init().catch((err: unknown) => {
+    throw err;
+  });
   hydrateRoot(
     document.body,
     <StrictMode>
