@@ -6,7 +6,7 @@ WORKDIR /app
 COPY . /app
 RUN pnpm install
 ENV NODE_ENV=development
-ENV API_BASE_URL=https://35.212.130.190/api
+ENV API_BASE_URL=/api
 RUN cd workspaces/client && pnpm build
 ENV NODE_ENV=production
 ENV HTTPS=true
