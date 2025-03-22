@@ -6,8 +6,9 @@ WORKDIR /app
 COPY . /app
 RUN pnpm install
 ENV NODE_ENV=development
+ENV API_BASE_URL=https://wsh2025.akimo.dev/api
 RUN cd workspaces/client && pnpm build
 ENV NODE_ENV=production
 ENV HTTPS=true
 ENV PORT=443
-CMD ["pnpm", "-filter", "@wsh-2025/server", "start"]
+CMD ["pnpm", "start"]
