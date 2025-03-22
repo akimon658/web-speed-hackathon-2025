@@ -61,9 +61,7 @@ export const PlayerController = ({ episode }: Props) => {
                     togglePlaying();
                   }}
                 >
-                  <span
-                    className={`i-material-symbols:${playing ? 'pause-rounded' : 'play-arrow-rounded'} m-[14px] block size-[20px] shrink-0 grow-0 text-[#FFFFFF]`}
-                  />
+                  <img className="m-[14px] block size-[20px] shrink-0 grow-0" src={playing ? '/public/material-symbols--pause-rounded.svg' : '/public/material-symbols--play-arrow-rounded.svg'} />
                 </button>
               </Hoverable>
 
@@ -81,13 +79,11 @@ export const PlayerController = ({ episode }: Props) => {
                 aria-label={muted ? 'ミュート解除する' : 'ミュートする'}
                 className="block rounded-[4px]"
                 type="button"
+                onClick={() => {
+                  toggleMuted();
+                }}
               >
-                <span
-                  className={`i-material-symbols:${muted ? 'volume-off-rounded' : 'volume-up-rounded'} m-[14px] block size-[20px] shrink-0 grow-0 text-[#FFFFFF]`}
-                  onClick={() => {
-                    toggleMuted();
-                  }}
-                />
+                <img className="m-[14px] block size-[20px] shrink-0 grow-0" src={muted ? '/public/material-symbols--volume-off-rounded.svg' : '/public/material-symbols--volume-up-rounded.svg'} />
               </button>
             </Hoverable>
           </div>

@@ -25,9 +25,7 @@ export const PlayerController = () => {
                   toggleMuted();
                 }}
               >
-                <span
-                  className={`i-material-symbols:${muted ? 'volume-off-rounded' : 'volume-up-rounded'} m-[14px] block size-[20px] shrink-0 grow-0 text-[#FFFFFF]`}
-                />
+                <img className="m-[14px] block shrink-0 grow-0" src={muted ? '/public/material-symbols--volume-off-rounded.svg' : '/public/material-symbols--volume-up-rounded.svg'} />
               </button>
             </Hoverable>
           </div>
