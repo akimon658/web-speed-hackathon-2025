@@ -59,7 +59,9 @@ const config = {
   },
   plugins: [
     new webpack.EnvironmentPlugin({ API_BASE_URL: '/api', NODE_ENV: '' }),
-    new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+    }),
   ],
   resolve: {
     alias: {
