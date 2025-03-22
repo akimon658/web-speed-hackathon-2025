@@ -76,12 +76,6 @@ export function registerSsr(app: FastifyInstance): void {
         </head>
         <body></body>
       </html>
-      <script>
-        window.__staticRouterHydrationData = ${htmlescape({
-          actionData: context.actionData,
-          loaderData: context.loaderData,
-        })};
-      </script>
     `);
   });
 }
