@@ -14,7 +14,7 @@ interface Props {
 
 export const SeekThumbnail = ({ episode }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
-  const seekThumbnail = useSeekThumbnail({ episode });
+  const { getThumbnailStyle, isLoading, error } = useSeekThumbnail(episode.streamId);
   const pointer = usePointer();
   const duration = useDuration();
 
@@ -28,12 +28,19 @@ export const SeekThumbnail = ({ episode }: Props) => {
   const MIN_LEFT = SEEK_THUMBNAIL_WIDTH / 2;
   const MAX_LEFT = elementRect.width - SEEK_THUMBNAIL_WIDTH / 2;
 
+  // サムネイルの読み込みが完了していない場合は何も表示しない
+  if (isLoading || error) {
+    return null;
+  }
+
+  const thumbnailStyle = getThumbnailStyle(pointedTime);
+
   return (
     <div
       ref={ref}
-      className={`absolute h-[90px] w-[160px] bg-[size:auto_100%] bg-[url(${seekThumbnail})] bottom-0 translate-x-[-50%]`}
+      className="absolute h-[90px] w-[160px] bottom-0 translate-x-[-50%]"
       style={{
-        backgroundPositionX: -1 * SEEK_THUMBNAIL_WIDTH * Math.floor(pointedTime),
+        ...thumbnailStyle,
         left: Math.max(MIN_LEFT, Math.min(relativeX, MAX_LEFT)),
       }}
     />
