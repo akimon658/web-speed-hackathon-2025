@@ -1,0 +1,51 @@
+name: Visual Regression Test
+
+on:
+  push:
+    branches:
+      - main # mainブランチへのpush時に実行
+  pull_request:
+    branches:
+      - main # mainブランチへのpull request時に実行
+
+jobs:
+  vrt:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0 # Node.jsのバージョンを指定
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Playwright browsers
+        run: pnpm -filter "@wsh-2025/test" exec playwright install chromium
+
+      - name: Build and start server (if needed)
+        run: |
+          pnpm build
+          pnpm start &
+          npx wait-on http://localhost:3000 # サーバー起動を待機
+
+      - name: Run Visual Regression Test
+        run: pnpm run test # ローカル環境に対するテスト
+
+        # リモート環境に対するテストの場合は以下を使用
+        # env:
+        #   E2E_BASE_URL: https://web-speed-hackathon-2025.example.com
+        # run: pnpm run test
+
+      - name: Upload screenshots (optional)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: screenshots
+          path: workspaces/test/test-results/ # スクリーンショットの出力パス
+
+      # 必要に応じて、テスト結果のレポート出力やSlack通知などを追加
