@@ -1,3 +1,4 @@
+import '@wsh-2025/client/src/setups/polyfills';
 import '@wsh-2025/client/src/setups/luxon';
 import '@wsh-2025/client/src/setups/unocss';
 
@@ -19,7 +20,7 @@ function main() {
   const router = createBrowserRouter(createRoutes(store), {});
 
   hydrateRoot(
-    document,
+    document.body,
     <StrictMode>
       <StoreProvider createStore={() => store}>
         <RouterProvider router={router} />
