@@ -34,7 +34,7 @@ jobs:
         run: |
           pnpm build
           pnpm start &
-          npx wait-on http://localhost:3000 # サーバー起動を待機
+          npx wait-on http://localhost:8000 # サーバー起動を待機
 
       - name: Run Visual Regression Test
         run: pnpm run test # ローカル環境に対するテスト
