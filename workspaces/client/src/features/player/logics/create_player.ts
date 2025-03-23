@@ -10,8 +10,8 @@ class HlsJSPlayerWrapper implements PlayerWrapper {
     volume: 0.25,
   });
   private _player = new HlsJs({
-    enableWorker: false,
-    maxBufferLength: 50,
+    enableWorker: true,
+    maxBufferLength: 30,
   });
 
   get currentTime(): number {
