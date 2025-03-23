@@ -144,7 +144,15 @@ export const getTimetableRequestQuery = z.object({
   since: z.coerce.string().openapi({ format: 'date-time' }),
   until: z.coerce.string().openapi({ format: 'date-time' }),
 });
-export const getTimetableResponse = z.array(program.extend({}));
+export const getTimetableResponse = z.array(z.object({
+  id: z.string(),
+  title: z.string(),
+  startAt: z.string(),
+  endAt: z.string(),
+  thumbnailUrl: z.string(),
+  episodeId: z.string(),
+  channelId: z.string(),
+}));
 
 // GET /programs
 export const getProgramsRequestQuery = z.object({

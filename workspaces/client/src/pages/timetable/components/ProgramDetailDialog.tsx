@@ -1,6 +1,6 @@
 import { StandardSchemaV1 } from '@standard-schema/spec';
 import * as schema from '@wsh-2025/schema/src/api/schema';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { ArrayValues } from 'type-fest';
 
@@ -20,6 +20,19 @@ export const ProgramDetailDialog = ({ isOpen, program }: Props): ReactElement =>
   const onClose = () => {
     setProgram(null);
   };
+  const [programDescription, setProgramDescription] = useState('読み込み中');
+  useEffect(() => {
+    if (isOpen === false) {
+      return;
+    }
+
+    const fetchProgramDescription = async () => {
+      const response = await fetch(`/api/programs/${program.id}`);
+      const data = await response.json();
+      setProgramDescription(data.description);
+    }
+    fetchProgramDescription();
+  }, [isOpen, program.id]);
 
   return (
     <Dialog isOpen={isOpen} onClose={onClose}>
@@ -28,7 +41,7 @@ export const ProgramDetailDialog = ({ isOpen, program }: Props): ReactElement =>
 
         <p className="mb-[8px] text-[14px] font-bold text-[#ffffff]">{program.title}</p>
         <div className="mb-[16px] text-[14px] text-[#999999]">
-          <div className="line-clamp-5">{program.description}</div>
+          <div className="line-clamp-5">{programDescription}</div>
         </div>
         <img
           alt=""
