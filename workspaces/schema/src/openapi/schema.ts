@@ -188,7 +188,13 @@ export const getRecommendedModulesResponse = z.array(
           thumbnailUrl: z.string(),
         })
           .nullable(),
-        episode: episode
+        episode: z.object({
+          title: z.string(),
+          id: z.string(),
+          thumbnailUrl: z.string(),
+          premium: z.boolean(),
+          streamId: z.string(),
+        })
           .extend({
             series: z.object({ title: z.string() })
           })

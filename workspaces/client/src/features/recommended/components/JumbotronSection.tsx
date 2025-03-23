@@ -1,6 +1,6 @@
 import { StandardSchemaV1 } from '@standard-schema/spec';
 import * as schema from '@wsh-2025/schema/src/api/schema';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Ellipsis from 'react-ellipsis-component';
 import { Flipped } from 'react-flip-toolkit';
 import { NavLink } from 'react-router';
@@ -21,6 +21,17 @@ export const JumbotronSection = ({ module }: Props) => {
 
   const episode = module.items[0]?.episode;
   invariant(episode);
+  const [description, setDescription] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setIsLoading(true);
+    (async () => {
+      const res = await fetch(`/api/episodes/${episode.id}`);
+      const resJson = await res.json();
+      setDescription(resJson.description);
+      setIsLoading(false);
+    })();
+  }, [episode.id]);
 
   return (
     <Hoverable classNames={{ hovered: 'opacity-50' }}>
@@ -37,7 +48,11 @@ export const JumbotronSection = ({ module }: Props) => {
                   <Ellipsis ellipsis reflowOnResize maxLine={2} text={episode.title} visibleLine={2} />
                 </div>
                 <div className="w-full text-center text-[14px] font-bold text-[#ffffff]">
-                  <Ellipsis ellipsis reflowOnResize maxLine={3} text={episode.description} visibleLine={3} />
+                  {isLoading ? (
+                    <div className="text-[#ffffff]">読み込み中</div>
+                  ) : (
+                    <Ellipsis ellipsis reflowOnResize maxLine={3} text={description} visibleLine={3} />
+                  )}
                 </div>
               </div>
 
