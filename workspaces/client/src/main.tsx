@@ -11,7 +11,7 @@ import { createRoutes } from '@wsh-2025/client/src/app/createRoutes';
 import { createStore } from '@wsh-2025/client/src/app/createStore';
 
 function main() {
-  const store = createStore({});
+  const store = createStore();
   const router = createBrowserRouter(createRoutes(store), {});
 
   init().catch((err: unknown) => {
