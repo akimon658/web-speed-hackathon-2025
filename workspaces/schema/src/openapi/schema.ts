@@ -182,7 +182,11 @@ export const getRecommendedModulesResponse = z.array(
   recommendedModule.extend({
     items: z.array(
       recommendedItem.extend({
-        series: series
+        series: z.object({
+          title: z.string(),
+          id: z.string(),
+          thumbnailUrl: z.string(),
+        })
           .nullable(),
         episode: episode
           .extend({
