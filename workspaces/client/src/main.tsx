@@ -1,4 +1,3 @@
-import '@wsh-2025/client/src/setups/luxon';
 import { init } from '@wsh-2025/client/src/setups/unocss';
 
 import { StrictMode } from 'react';

@@ -1,23 +1,29 @@
-/* eslint-disable sort/object-properties */
-import '@wsh-2025/schema/src/setups/luxon';
-
 import { relations } from 'drizzle-orm';
 import { sqliteTable as table } from 'drizzle-orm/sqlite-core';
 import * as t from 'drizzle-orm/sqlite-core';
-import { DateTime } from 'luxon';
 
-function parseTime(timeString: string): DateTime {
-  const parsed = DateTime.fromFormat(timeString, 'HH:mm:ss').toObject();
-  return DateTime.now().set({
-    hour: parsed.hour,
-    minute: parsed.minute,
-    second: parsed.second,
-    millisecond: 0,
-  });
+function parseTime(timeString: string): string {
+  const [hours, minutes, seconds] = timeString.split(':').map(Number);
+  const now = new Date();
+  const date = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    hours,
+    minutes,
+    seconds,
+    0
+  );
+  return date.toISOString();
 }
 
 function formatTime(isoString: string): string {
-  return DateTime.fromISO(isoString).toFormat('HH:mm:ss');
+  const date = new Date(isoString);
+  return [
+    date.getHours().toString().padStart(2, '0'),
+    date.getMinutes().toString().padStart(2, '0'),
+    date.getSeconds().toString().padStart(2, '0')
+  ].join(':');
 }
 
 // 競技のため、時刻のみ保持して、日付は現在の日付にします
@@ -29,7 +35,7 @@ const startAtTimestamp = t.customType<{
     return 'text';
   },
   fromDriver(timeString: string) {
-    return parseTime(timeString).toISO();
+    return parseTime(timeString);
   },
   toDriver(isoString: string) {
     return formatTime(isoString);
@@ -46,11 +52,17 @@ const endAtTimestamp = t.customType<{
     return 'text';
   },
   fromDriver(timeString: string) {
-    const parsed = parseTime(timeString);
-    if (DateTime.now().startOf('day').equals(parsed)) {
-      return parsed.plus({ day: 1 }).toISO();
+    const parsed = new Date(parseTime(timeString));
+    // Check if time is midnight (00:00:00)
+    if (
+      parsed.getHours() === 0 &&
+      parsed.getMinutes() === 0 &&
+      parsed.getSeconds() === 0
+    ) {
+      parsed.setDate(parsed.getDate() + 1); // Add one day
+      return parsed.toISOString();
     }
-    return parsed.toISO();
+    return parsed.toISOString();
   },
   toDriver(isoString: string) {
     return formatTime(isoString);

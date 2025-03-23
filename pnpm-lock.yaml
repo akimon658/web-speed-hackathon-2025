@@ -66,9 +66,6 @@ importers:
       immer:
         specifier: 10.1.1
         version: 10.1.1
-      luxon:
-        specifier: 3.5.0
-        version: 3.5.0
       p-min-delay:
         specifier: 4.0.2
         version: 4.0.2
@@ -244,19 +241,16 @@ importers:
         version: 0.34.30
       '@sinclair/typemap':
         specifier: 0.8.18
-        version: 0.8.18(@sinclair/typebox@0.34.30)(valibot@1.0.0-rc.3(typescript@5.7.2))(zod@3.24.1)
+        version: 0.8.18(@sinclair/typebox@0.34.30)(valibot@1.0.0-rc.3)(zod@3.24.1)
       drizzle-orm:
         specifier: 0.38.2
-        version: 0.38.2(@libsql/client@0.14.0)(@types/react@19.0.1)(react@19.0.0)
+        version: 0.38.2
       drizzle-zod:
         specifier: 0.6.0
-        version: 0.6.0(drizzle-orm@0.38.2(@libsql/client@0.14.0)(@types/react@19.0.1)(react@19.0.0))(zod@3.24.1)
-      luxon:
-        specifier: 3.5.0
-        version: 3.5.0
+        version: 0.6.0(drizzle-orm@0.38.2)(zod@3.24.1)
       valibot:
         specifier: 1.0.0-rc.3
-        version: 1.0.0-rc.3(typescript@5.7.2)
+        version: 1.0.0-rc.3
       zod:
         specifier: 3.24.1
         version: 3.24.1
@@ -6763,10 +6757,10 @@ snapshots:
 
   '@sinclair/typebox@0.34.30': {}
 
-  '@sinclair/typemap@0.8.18(@sinclair/typebox@0.34.30)(valibot@1.0.0-rc.3(typescript@5.7.2))(zod@3.24.1)':
+  '@sinclair/typemap@0.8.18(@sinclair/typebox@0.34.30)(valibot@1.0.0-rc.3)(zod@3.24.1)':
     dependencies:
       '@sinclair/typebox': 0.34.30
-      valibot: 1.0.0-rc.3(typescript@5.7.2)
+      valibot: 1.0.0-rc.3
       zod: 3.24.1
 
   '@standard-schema/spec@1.0.0': {}
@@ -7658,6 +7652,8 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  drizzle-orm@0.38.2: {}
+
   drizzle-orm@0.38.2(@libsql/client@0.14.0)(@types/react@19.0.1)(react@19.0.0):
     optionalDependencies:
       '@libsql/client': 0.14.0
@@ -7670,9 +7666,9 @@ snapshots:
     optionalDependencies:
       drizzle-orm: 0.38.2(@libsql/client@0.14.0)(@types/react@19.0.1)(react@19.0.0)
 
-  drizzle-zod@0.6.0(drizzle-orm@0.38.2(@libsql/client@0.14.0)(@types/react@19.0.1)(react@19.0.0))(zod@3.24.1):
+  drizzle-zod@0.6.0(drizzle-orm@0.38.2)(zod@3.24.1):
     dependencies:
-      drizzle-orm: 0.38.2(@libsql/client@0.14.0)(@types/react@19.0.1)(react@19.0.0)
+      drizzle-orm: 0.38.2
       zod: 3.24.1
 
   dunder-proto@1.0.1:
@@ -10088,6 +10084,8 @@ snapshots:
   utils-merge@1.0.1: {}
 
   uuid@8.3.2: {}
+
+  valibot@1.0.0-rc.3: {}
 
   valibot@1.0.0-rc.3(typescript@5.7.2):
     optionalDependencies:
