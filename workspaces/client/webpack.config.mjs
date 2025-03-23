@@ -39,6 +39,10 @@ const config = {
         type: 'asset/inline',
       },
       {
+        test: /\.avif$/,
+        type: 'asset/inline',
+      },
+      {
         resourceQuery: /raw/,
         type: 'asset/source',
       },
