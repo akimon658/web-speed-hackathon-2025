@@ -487,13 +487,6 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
               episode: {
                 with: {
                   series: {
-                    with: {
-                      episodes: {
-                        orderBy(episode, { asc }) {
-                          return asc(episode.order);
-                        },
-                      },
-                    },
                   },
                 },
               },
