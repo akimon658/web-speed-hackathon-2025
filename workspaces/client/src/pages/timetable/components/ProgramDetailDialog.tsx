@@ -14,7 +14,6 @@ interface Props {
 }
 
 export const ProgramDetailDialog = ({ isOpen, program }: Props): ReactElement => {
-  const episode = useEpisode(program.episodeId);
   const [, setProgram] = useSelectedProgramId();
 
   const onClose = () => {
@@ -33,6 +32,23 @@ export const ProgramDetailDialog = ({ isOpen, program }: Props): ReactElement =>
     }
     fetchProgramDescription();
   }, [isOpen, program.id]);
+  const [episodeTitle, setEpisodeTitle] = useState('読み込み中');
+  const [episodeDescription, setEpisodeDescription] = useState('読み込み中');
+  const [episodeThumbnailUrl, setEpisodeThumbnailUrl] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    if (isOpen === false) {
+      return;
+    }
+
+    const fetchEpisodeDescription = async () => {
+      const response = await fetch(`/api/episodes/${program.episodeId}`);
+      const data = await response.json();
+      setEpisodeTitle(data.title);
+      setEpisodeDescription(data.description);
+      setEpisodeThumbnailUrl(data.thumbnailUrl);
+    }
+    fetchEpisodeDescription();
+  }, [isOpen, program.episodeId]);
 
   return (
     <Dialog isOpen={isOpen} onClose={onClose}>
@@ -49,21 +65,17 @@ export const ProgramDetailDialog = ({ isOpen, program }: Props): ReactElement =>
           src={program.thumbnailUrl}
         />
 
-        {episode != null ? (
-          <>
-            <h3 className="mb-[24px] text-center text-[24px] font-bold">番組で放送するエピソード</h3>
+        <h3 className="mb-[24px] text-center text-[24px] font-bold">番組で放送するエピソード</h3>
 
-            <p className="mb-[8px] text-[14px] font-bold text-[#ffffff]">{episode.title}</p>
-            <div className="mb-[16px] text-[14px] text-[#999999]">
-              <div className="line-clamp-5">{episode.description}</div>
-            </div>
-            <img
-              alt=""
-              className="mb-[24px] w-full rounded-[8px] border-[2px] border-solid border-[#FFFFFF1F]"
-              src={episode.thumbnailUrl}
-            />
-          </>
-        ) : null}
+        <p className="mb-[8px] text-[14px] font-bold text-[#ffffff]">{episodeTitle}</p>
+        <div className="mb-[16px] text-[14px] text-[#999999]">
+          <div className="line-clamp-5">{episodeDescription}</div>
+        </div>
+        <img
+          alt=""
+          className="mb-[24px] w-full rounded-[8px] border-[2px] border-solid border-[#FFFFFF1F]"
+          src={episodeThumbnailUrl}
+        />
 
         <div className="flex flex-row justify-center">
           <Link
