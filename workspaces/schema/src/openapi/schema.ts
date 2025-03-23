@@ -115,11 +115,7 @@ export const getEpisodesResponse = z.array(
 export const getEpisodeByIdRequestParams = z.object({
   episodeId: z.string(),
 });
-export const getEpisodeByIdResponse = episode.extend({
-  series: series.extend({
-    episodes: z.array(episode.extend({})),
-  }),
-});
+export const getEpisodeByIdResponse = episode;
 
 // GET /series
 export const getSeriesRequestQuery = z.object({
@@ -175,11 +171,6 @@ export const getProgramByIdRequestParams = z.object({
 });
 export const getProgramByIdResponse = program.extend({
   channel: channel.extend({}),
-  episode: episode.extend({
-    series: series.extend({
-      episodes: z.array(episode.extend({})),
-    }),
-  }),
 });
 
 // GET /recommended/:referenceId

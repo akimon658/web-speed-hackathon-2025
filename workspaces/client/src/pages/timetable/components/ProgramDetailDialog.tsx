@@ -5,7 +5,6 @@ import { Link } from 'react-router';
 import { ArrayValues } from 'type-fest';
 
 import { Dialog } from '@wsh-2025/client/src/features/dialog/components/Dialog';
-import { useEpisode } from '@wsh-2025/client/src/pages/timetable/hooks/useEpisode';
 import { useSelectedProgramId } from '@wsh-2025/client/src/pages/timetable/hooks/useSelectedProgramId';
 
 interface Props {
